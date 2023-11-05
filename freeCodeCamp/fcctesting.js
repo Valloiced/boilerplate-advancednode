@@ -42,8 +42,8 @@ const allowedOrigins = [
   /^http:\/\/localhost:\d+/,
 ];
 
-module.exports = function (app) {
-  app.use(function (req, res, next) {
+module.exports = function(app) {
+  app.use(function(req, res, next) {
     const origin = req.get("origin");
     if (allowedOrigins.some((regex) => regex.test(origin))) {
       res.setHeader("Access-Control-Allow-Origin", origin);
@@ -60,39 +60,39 @@ module.exports = function (app) {
     res.json(appClone);
   });
 
-  app.route("/_api/server.js").get(function (req, res, next) {
+  app.route("/_api/server.js").get(function(req, res, next) {
     console.log("requested");
-    fs.readFile(process.cwd() + "/server.js", function (err, data) {
+    fs.readFile(process.cwd() + "/server.js", function(err, data) {
       if (err) return next(err);
       res.send(data.toString());
     });
   });
 
-  app.route("/_api/routes.js").get(function (req, res, next) {
+  app.route("/_api/routes.js").get(function(req, res, next) {
     console.log("requested");
-    fs.readFile(process.cwd() + "/routes.js", function (err, data) {
+    fs.readFile(process.cwd() + "/routes.js", function(err, data) {
       if (err) return next(err);
       res.send(data.toString());
     });
   });
 
-  app.route("/_api/auth.js").get(function (req, res, next) {
+  app.route("/_api/auth.js").get(function(req, res, next) {
     console.log("requested");
-    fs.readFile(process.cwd() + "/auth.js", function (err, data) {
+    fs.readFile(process.cwd() + "/auth.js", function(err, data) {
       if (err) return next(err);
       res.send(data.toString());
     });
   });
 
-  app.route("/_api/package.json").get(function (req, res, next) {
+  app.route("/_api/package.json").get(function(req, res, next) {
     console.log("requested");
-    fs.readFile(process.cwd() + "/package.json", "utf-8", function (err, data) {
+    fs.readFile(process.cwd() + "/package.json", "utf-8", function(err, data) {
       if (err) return next(err);
       res.json(JSON.parse(data));
     });
   });
 
-  app.get("/_api/app-info", function (req, res) {
+  app.get("/_api/app-info", function(req, res) {
     var hs = Object.keys(res._headers).filter(
       (h) => !h.match(/^access-control-\w+/)
     );
